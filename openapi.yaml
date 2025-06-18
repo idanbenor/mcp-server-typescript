@@ -3,12 +3,14 @@ info:
   title: DataForSEO MCP Plugin
   description: MCP server that connects ChatGPT to DataForSEO
   version: "1.0.0"
+
 servers:
   - url: https://mcp-server-typescript-production.up.railway.app
+
 paths:
   /serp/live/advanced:
     post:
-      summary: Get live SERP data
+      summary: Get live SERP data from DataForSEO
       requestBody:
         required: true
         content:
@@ -18,13 +20,13 @@ paths:
               properties:
                 keyword:
                   type: string
-                  example: apple
+                  example: "apple"
                 location_code:
                   type: integer
                   example: 2840
                 language_code:
                   type: string
-                  example: en
+                  example: "en"
       responses:
         '200':
           description: Successful response
