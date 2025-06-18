@@ -1,17 +1,36 @@
-{
-  "schema_version": "v1",
-  "name_for_human": "DataForSEO Context",
-  "name_for_model": "dataforseo_context",
-  "description_for_human": "קבל נתוני SEO (כמו SERP ו־keywords) מדאטהפור־SEO דרך MCP",
-  "description_for_model": "Use this plugin to retrieve context data from DataForSEO using the MCP API.",
-  "auth": {
-    "type": "none"
-  },
-  "api": {
-    "type": "openapi",
-    "url": "https://mcp-server-typescript-production.up.railway.app/openapi.yaml"
-  },
-  "logo_url": "https://mcp-server-typescript-production.up.railway.app/logo.png",
-  "contact_email": "i@idanbenor.co.il",
-  "legal_info_url": "https://mcp-server-typescript-production.up.railway.app/legal"
-}
+openapi: 3.0.1
+info:
+  title: DataForSEO MCP Plugin
+  description: MCP server that connects ChatGPT to DataForSEO
+  version: "1.0.0"
+
+servers:
+  - url: https://mcp-server-typescript-production.up.railway.app
+
+paths:
+  /serp/live/advanced:
+    post:
+      summary: Get live SERP data from DataForSEO
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                keyword:
+                  type: string
+                  example: "apple"
+                location_code:
+                  type: integer
+                  example: 2840
+                language_code:
+                  type: string
+                  example: "en"
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
