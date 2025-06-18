@@ -1,14 +1,14 @@
 {
   "name": "dataforseo-mcp-server",
   "version": "2.2.6",
-  "main": "build/index.js",
+  "main": "build/index-http.js",
   "type": "module",
   "bin": {
     "dataforseo-mcp-server": "./build/cli.js"
   },
   "scripts": {
     "build": "tsc && node -e \"require('fs').chmodSync('build/cli.js', '755')\"",
-    "start": "DATAFORSEO_MCP_TRANSPORT=http node build/index.js",
+    "start": "npm run build && node build/index-http.js",
     "dev": "tsc --watch",
     "prepare": "npm run build",
     "http": "node build/index-http.js",
