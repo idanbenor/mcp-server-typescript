@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { HttpServerTransport } from "@modelcontextprotocol/sdk/server/http.js"; // שינוי כאן
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { DataForSEOClient, DataForSEOConfig } from './client/dataforseo.client.js';
 import { SerpApiModule } from './modules/serp/serp-api.module.js';
 import { KeywordsDataApiModule } from './modules/keywords-data/keywords-data-api.module.js';
 import { OnPageApiModule } from './modules/onpage/onpage-api.module.js';
 import { DataForSEOLabsApi } from './modules/dataforseo-labs/dataforseo-labs-api.module.js';
-import { EnabledModulesSchema, isModuleEnabled } from './config/modules.config.js';
+import { EnabledModulesSchema, isModuleEnabled, defaultEnabledModules } from './config/modules.config.js';
 import { BaseModule } from './modules/base.module.js';
 import { z } from 'zod';
 import { BacklinksApiModule } from "./modules/backlinks/backlinks-api.module.js";
@@ -88,11 +88,10 @@ console.error('Tools registered');
 
 // Start the server
 async function main() {
-  const port = process.env.PORT || 3000;
-  const transport = new HttpServerTransport({ port }); // שינוי כאן
-  console.error(`Starting server on port ${port}`);
+  const transport = new StdioServerTransport(); 
+  console.error('Starting server');
   await server.connect(transport);
-  console.error("DataForSEO MCP Server running on HTTP");
+  console.error("DataForSEO MCP Server running (stdio or HTTP if overridden)");
 }
 
 main().catch((error) => {
