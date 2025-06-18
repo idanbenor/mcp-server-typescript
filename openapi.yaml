@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: DataForSEO MCP Plugin
   description: MCP server that connects ChatGPT to DataForSEO
@@ -11,6 +11,7 @@ paths:
   /serp/live/advanced:
     post:
       summary: Get live SERP data from DataForSEO
+      operationId: getSerpAdvanced
       requestBody:
         required: true
         content:
@@ -28,7 +29,7 @@ paths:
                   type: string
                   example: "en"
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
