@@ -8,7 +8,55 @@ import { DataForSEOLabsApi } from './modules/dataforseo-labs/dataforseo-labs-api
 import { EnabledModulesSchema, isModuleEnabled } from './config/modules.config.js';
 import { BaseModule, ToolDefinition } from './modules/base.module.js';
 import { z } from 'zod';
-import { BacklinksApiModule } from "./modules/backlinks/backlinks-api.module.js";
+import { BacklinksApiModule } from "./modulapp.post('/mcp', basicAuth, (req: Request, res: Response) => {
+  (async () => {
+    try {
+      const username = req.username || process.env.DATAFORSEO_USERNAME;
+      const password = req.password || process.env.DATAFORSEO_PASSWORD;
+
+      if (!username || !password) {
+        return res.status(401).json({
+          jsonrpc: "2.0",
+          error: { code: -32001, message: "Missing DataForSEO credentials" },
+          id: null,
+        });
+      }
+
+      const server = getServer(username, password);
+      const transport = new StreamableHTTPServerTransport({
+        sessionIdGenerator: () => randomUUID()
+      });
+
+      await server.connect(transport);
+      await transport.handleRequest(req, res, req.body);
+
+      req.on('close', () => {
+        transport.close();
+        server.close();
+      });
+
+    } catch (err) {
+      console.error("Error handling /mcp:", err);
+      if (!res.headersSent) {
+        res.status(500).json({
+          jsonrpc: '2.0',
+          error: { code: -32603, message: 'Internal server error' },
+          id: null,
+        });
+      }
+    }
+  })().catch(err => {
+    console.error("Unexpected error in IIFE:", err);
+    if (!res.headersSent) {
+      res.status(500).json({
+        jsonrpc: '2.0',
+        error: { code: -32603, message: 'Internal server error' },
+        id: null,
+      });
+    }
+  });
+});
+es/backlinks/backlinks-api.module.js";
 import { BusinessDataApiModule } from "./modules/business-data-api/business-data-api.module.js";
 import { DomainAnalyticsApiModule } from "./modules/domain-analytics/domain-analytics-api.module.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
@@ -153,6 +201,7 @@ app.post('/mcp', basicAuth, (req: Request, res: Response) => {
     }
   });
 });
+
 
       }
 
