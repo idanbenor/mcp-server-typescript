@@ -105,7 +105,8 @@ async function main() {
   };
 
   // ✅ POST /mcp handler
-  app.post('/mcp', basicAuth, async (req: Request, res: Response) => {
+app.post('/mcp', basicAuth, (req: Request, res: Response) => {
+  (async () => {
     try {
       const username = req.username || process.env.DATAFORSEO_USERNAME;
       const password = req.password || process.env.DATAFORSEO_PASSWORD;
@@ -116,6 +117,43 @@ async function main() {
           error: { code: -32001, message: "Missing DataForSEO credentials" },
           id: null,
         });
+      }
+
+      const server = getServer(username, password);
+      const transport = new StreamableHTTPServerTransport({
+        sessionIdGenerator: () => randomUUID()
+      });
+
+      await server.connect(transport);
+      await transport.handleRequest(req, res, req.body);
+
+      req.on('close', () => {
+        transport.close();
+        server.close();
+      });
+
+    } catch (err) {
+      console.error("Error handling /mcp:", err);
+      if (!res.headersSent) {
+        res.status(500).json({
+          jsonrpc: '2.0',
+          error: { code: -32603, message: 'Internal server error' },
+          id: null,
+        });
+      }
+    }
+  })().catch(err => {
+    console.error("Unexpected error in IIFE:", err);
+    if (!res.headersSent) {
+      res.status(500).json({
+        jsonrpc: '2.0',
+        error: { code: -32603, message: 'Internal server error' },
+        id: null,
+      });
+    }
+  });
+});
+
       }
 
       const server = getServer(username, password);
