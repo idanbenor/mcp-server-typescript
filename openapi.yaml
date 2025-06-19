@@ -6,6 +6,7 @@ info:
 
 servers:
   - url: https://plugin.example.com/
+    description: MCP base URL
 
 paths:
   /serp/live/advanced:
