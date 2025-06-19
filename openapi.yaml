@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: DataForSEO MCP Plugin
-  description: MCP server that connects ChatGPT to DataForSEO
+  description: MCP endpoint that accepts JSON-RPC calls
   version: "1.0.0"
 
 servers:
@@ -9,10 +9,10 @@ servers:
     description: MCP base URL
 
 paths:
-  /serp/live/advanced:
+  /mcp:
     post:
-      summary: Get live SERP data from DataForSEO
-      operationId: getSerpLiveAdvanced
+      summary: Call MCP tools via JSON-RPC
+      operationId: getSerpLiveAdvanced            # שם חופשי; רק כדי שה-builder יזהה
       requestBody:
         required: true
         content:
@@ -20,22 +20,28 @@ paths:
             schema:
               type: object
               properties:
-                keyword:
+                jsonrpc:
                   type: string
-                  example: "apple"
-                location_code:
-                  type: integer
-                  example: 2840
-                language_code:
+                  enum: ["2.0"]
+                id:
+                  oneOf: [{type: string}, {type: integer}]
+                method:
                   type: string
-                  example: "en"
-              required: [keyword, location_code, language_code]
+                  example: getSerpLiveAdvanced
+                params:
+                  type: object
+                  properties:
+                    keyword: { type: string, example: "apple" }
+                    location_code: { type: integer, example: 2840 }
+                    language_code: { type: string, example: "en" }
+                  required: [keyword, location_code, language_code]
+              required: [jsonrpc, id, method, params]
       responses:
         "200":
-          description: Successful response
+          description: MCP server response
           content:
             application/json:
               schema:
                 type: object
-                properties: {}            # ← מוסיף properties ריק
+                properties: {}
                 additionalProperties: true
