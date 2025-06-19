@@ -11,7 +11,7 @@ paths:
   /serp/live/advanced:
     post:
       summary: Get live SERP data from DataForSEO
-      operationId: getSerpAdvanced
+      operationId: getSerpLiveAdvanced
       requestBody:
         required: true
         content:
