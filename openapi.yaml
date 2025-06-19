@@ -1,11 +1,11 @@
-openapi: 3.0.1          # ⬅️ שינוי
+openapi: 3.0.1
 info:
   title: DataForSEO MCP Plugin
   description: MCP server that connects ChatGPT to DataForSEO
   version: "1.0.0"
 
 servers:
-  - url: https://plugin.example.com   # ⬅️ בלי הסלאש
+  - url: https://mcp-server-typescript-production.up.railway.app
     description: MCP base URL
 
 paths:
