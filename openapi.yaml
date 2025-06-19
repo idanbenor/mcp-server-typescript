@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: DataForSEO MCP Plugin
   description: MCP server that connects ChatGPT to DataForSEO
@@ -29,6 +29,7 @@ paths:
                 language_code:
                   type: string
                   example: "en"
+              required: [keyword, location_code, language_code]
       responses:
         "200":
           description: Successful response
@@ -36,3 +37,4 @@ paths:
             application/json:
               schema:
                 type: object
+                additionalProperties: true   # ← מוסיף נכסים חופשיים כדי לעבור ולידציה
