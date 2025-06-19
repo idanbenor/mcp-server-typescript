@@ -37,4 +37,5 @@ paths:
             application/json:
               schema:
                 type: object
-                additionalProperties: true   # ← מוסיף נכסים חופשיים כדי לעבור ולידציה
+                properties: {}            # ← מוסיף properties ריק
+                additionalProperties: true
