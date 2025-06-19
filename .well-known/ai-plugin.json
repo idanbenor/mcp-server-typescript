@@ -2,16 +2,16 @@
   "schema_version": "v1",
   "name_for_human": "DataForSEO Context",
   "name_for_model": "dataforseo_context",
-  "description_for_human": "קבל נתוני SEO חיים (כמו SERP ו־keywords) מדאטהפור־SEO דרך MCP",
+  "description_for_human": "קבל נתוני SEO חיים (כמו SERP ו-keywords) מדאטהפור-SEO דרך MCP",
   "description_for_model": "Use this plugin to retrieve context data from DataForSEO using the MCP API.",
   "auth": {
     "type": "none"
   },
   "api": {
     "type": "openapi",
-    "url": "https://plugin.example.com/openapi.yaml"
+    "url": "https://mcp-server-typescript-production.up.railway.app/openapi.yaml"
   },
-  "logo_url": "https://plugin.example.com/logo.png",
+  "logo_url": "https://mcp-server-typescript-production.up.railway.app/logo.png",
   "contact_email": "you@example.com",
-  "legal_info_url": "https://plugin.example.com/legal"
+  "legal_info_url": "https://mcp-server-typescript-production.up.railway.app/legal"
 }
