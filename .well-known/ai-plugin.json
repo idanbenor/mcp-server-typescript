@@ -7,11 +7,11 @@
   "auth": {
     "type": "none"
   },
-"api": {
-  "type": "openapi",
-  "url": "https://plugin.example.com/openapi.yaml"
-},
-  "logo_url": "https://mcp-server-typescript-production.up.railway.app/logo.png",
-  "contact_email": "idanbenor.co.il",
-  "legal_info_url": "https://mcp-server-typescript-production.up.railway.app/legal"
+  "api": {
+    "type": "openapi",
+    "url": "https://plugin.example.com/openapi.yaml"
+  },
+  "logo_url": "https://plugin.example.com/logo.png",
+  "contact_email": "you@example.com",
+  "legal_info_url": "https://plugin.example.com/legal"
 }
