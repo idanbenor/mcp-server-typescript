@@ -62,6 +62,17 @@ async function main() {
   const app = express();
   const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
   app.use(express.json());
+  // Middleware שמוסיף text/event-stream ל-Accept אם חסר
+app.use((req, _res, next) => {
+  if (req.method === "POST" && req.path === "/mcp") {
+    const accept = req.headers.accept ?? "application/json";
+    if (!accept.includes("text/event-stream")) {
+      req.headers.accept = `${accept}, text/event-stream`;
+    }
+  }
+  next();
+});
+
 
   // Static files for ChatGPT
   app.get("/openapi.yaml", (req, res) => {
