@@ -67,7 +67,7 @@ async function main() {
 
   app.use(express.json());
 
-  /* Middleware: add text/event-stream to Accept if missing */
+  /* ★ Middleware: מוסיף text/event-stream אם חסר ב-Accept */
   app.use((req, _res, next) => {
     if (req.method === "POST" && req.path === "/mcp") {
       const current = req.headers.accept?.toString() ?? "application/json";
@@ -114,12 +114,11 @@ async function main() {
         }
 
         const server    = getServer(username, password);
-        await server.init();                              // ★ NEW ★
         const transport = new StreamableHTTPServerTransport({
           sessionIdGenerator: () => randomUUID()
         });
 
-        await server.connect(transport);
+        await server.connect(transport);           // server.connect מאתחל את ה-transport
         await transport.handleRequest(req, res, req.body);
 
         req.on("close", () => { transport.close(); server.close(); });
