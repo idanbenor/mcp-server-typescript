@@ -63,7 +63,9 @@ function getServer(username: string | undefined,
 
 async function main() {
   const app  = express();
-  const port = process.env.PORT ? Number(process.env.PORT) : 3000;
+
+  // *** זה התיקון: PORT דינמי ש-Railway דורש ***
+  const port = process.env.PORT ? Number(process.env.PORT) : 8080;
 
   app.use(express.json());
 
@@ -120,16 +122,16 @@ async function main() {
 
         await server.connect(transport);           // server.connect מאתחל את ה-transport
 
-// PATCH: תיקן את ה-headers כדי למנוע שגיאת 406
-const accepts = req.headers.accept?.toString() ?? "application/json";
-let fixedAccept = accepts;
-if (!accepts.includes("application/json")) {
-  fixedAccept = `application/json, ${fixedAccept}`;
-}
-if (!accepts.includes("text/event-stream")) {
-  fixedAccept = `${fixedAccept}, text/event-stream`;
-}
-req.headers.accept = fixedAccept;
+        // PATCH: תיקן את ה-headers כדי למנוע שגיאת 406
+        const accepts = req.headers.accept?.toString() ?? "application/json";
+        let fixedAccept = accepts;
+        if (!accepts.includes("application/json")) {
+          fixedAccept = `application/json, ${fixedAccept}`;
+        }
+        if (!accepts.includes("text/event-stream")) {
+          fixedAccept = `${fixedAccept}, text/event-stream`;
+        }
+        req.headers.accept = fixedAccept;
 
         await transport.handleRequest(req, res, req.body);
 
@@ -157,6 +159,7 @@ req.headers.accept = fixedAccept;
     });
   });
 
+  // *** השורה שגורמת לשרת לרוץ על הפורט ש-Railway מבקש ***
   app.listen(port, () =>
     console.log(`🚀 MCP HTTP server is running on port ${port}`)
   );
