@@ -119,6 +119,18 @@ async function main() {
         });
 
         await server.connect(transport);           // server.connect מאתחל את ה-transport
+
+// PATCH: תיקן את ה-headers כדי למנוע שגיאת 406
+const accepts = req.headers.accept?.toString() ?? "application/json";
+let fixedAccept = accepts;
+if (!accepts.includes("application/json")) {
+  fixedAccept = `application/json, ${fixedAccept}`;
+}
+if (!accepts.includes("text/event-stream")) {
+  fixedAccept = `${fixedAccept}, text/event-stream`;
+}
+req.headers.accept = fixedAccept;
+
         await transport.handleRequest(req, res, req.body);
 
         req.on("close", () => { transport.close(); server.close(); });
