@@ -10,7 +10,7 @@ import { z } from "zod";
 import { DataForSEOClient, DataForSEOConfig } from "./client/dataforseo.client.js";
 import { SerpApiModule } from "./modules/serp/serp-api.module.js";
 import { KeywordsDataApiModule } from "./modules/keywords-data/keywords-data-api.module.js";
-import { OnPageApiModule } from "./modules/onpage/onpage-api.module.js";RR
+import { OnPageApiModule } from "./modules/onpage/onpage-api.module.js";
 import { DataForSEOLabsApi } from "./modules/dataforseo-labs/dataforseo-labs-api.module.js";
 import { BacklinksApiModule } from "./modules/backlinks/backlinks-api.module.js";
 import { BusinessDataApiModule } from "./modules/business-data-api/business-data-api.module.js";
@@ -22,7 +22,7 @@ import { name, version } from "./utils/version.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname  = path.dirname(__filename);
 
-interface Request extends ExpressRequest {R
+interface Request extends ExpressRequest {
   username?: string;
   password?: string;
 }
@@ -62,21 +62,20 @@ function getServer(username: string | undefined,
 }
 
 async function main() {
-console.log("ENABLED_MODULES:", process.env.ENABLED_MODULES);
-console.log("DATAFORSEO_USERNAME:", process.env.DATAFORSEO_USERNAME);
-console.log("DATAFORSEO_PASSWORD:", process.env.DATAFORSEO_PASSWORD ? "SET" : "NOT SET");
+  // לוגים נוחים לדיבאג
+  console.log("ENABLED_MODULES:", process.env.ENABLED_MODULES);
+  console.log("DATAFORSEO_USERNAME:", process.env.DATAFORSEO_USERNAME);
+  console.log("DATAFORSEO_PASSWORD:", process.env.DATAFORSEO_PASSWORD ? "SET" : "NOT SET");
 
   const app  = express();
-
-  // *** זה התיקון: PORT דינמי ש-Railway דורש ***
   const port = process.env.PORT ? Number(process.env.PORT) : 8080;
 
   app.use(express.json());
 
+  // בריאות לשרת
   app.get("/", (_req, res) => {
-  res.send("OK");
-});
-
+    res.send("OK");
+  });
 
   /* ★ Middleware: מוסיף text/event-stream אם חסר ב-Accept */
   app.use((req, _res, next) => {
@@ -168,7 +167,6 @@ console.log("DATAFORSEO_PASSWORD:", process.env.DATAFORSEO_PASSWORD ? "SET" : "N
     });
   });
 
-  // *** השורה שגורמת לשרת לרוץ על הפורט ש-Railway מבקש ***
   app.listen(port, () =>
     console.log(`🚀 MCP HTTP server is running on port ${port}`)
   );
@@ -181,4 +179,3 @@ main().catch(err => {
   }
   process.exit(1);
 });
-
