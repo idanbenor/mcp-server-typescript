@@ -10,7 +10,7 @@ import { z } from "zod";
 import { DataForSEOClient, DataForSEOConfig } from "./client/dataforseo.client.js";
 import { SerpApiModule } from "./modules/serp/serp-api.module.js";
 import { KeywordsDataApiModule } from "./modules/keywords-data/keywords-data-api.module.js";
-import { OnPageApiModule } from "./modules/onpage/onpage-api.module.js";
+import { OnPageApiModule } from "./modules/onpage/onpage-api.module.js";RR
 import { DataForSEOLabsApi } from "./modules/dataforseo-labs/dataforseo-labs-api.module.js";
 import { BacklinksApiModule } from "./modules/backlinks/backlinks-api.module.js";
 import { BusinessDataApiModule } from "./modules/business-data-api/business-data-api.module.js";
@@ -22,7 +22,7 @@ import { name, version } from "./utils/version.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname  = path.dirname(__filename);
 
-interface Request extends ExpressRequest {
+interface Request extends ExpressRequest {R
   username?: string;
   password?: string;
 }
@@ -176,5 +176,9 @@ console.log("DATAFORSEO_PASSWORD:", process.env.DATAFORSEO_PASSWORD ? "SET" : "N
 
 main().catch(err => {
   console.error("Fatal error:", err);
+  if (err && err.stack) {
+    console.error("Stack trace:", err.stack);
+  }
   process.exit(1);
 });
+
