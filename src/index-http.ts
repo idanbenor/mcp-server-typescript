@@ -69,6 +69,11 @@ async function main() {
 
   app.use(express.json());
 
+  app.get("/", (_req, res) => {
+  res.send("OK");
+});
+
+
   /* ★ Middleware: מוסיף text/event-stream אם חסר ב-Accept */
   app.use((req, _res, next) => {
     if (req.method === "POST" && req.path === "/mcp") {
