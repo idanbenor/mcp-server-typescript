@@ -62,6 +62,10 @@ function getServer(username: string | undefined,
 }
 
 async function main() {
+console.log("ENABLED_MODULES:", process.env.ENABLED_MODULES);
+console.log("DATAFORSEO_USERNAME:", process.env.DATAFORSEO_USERNAME);
+console.log("DATAFORSEO_PASSWORD:", process.env.DATAFORSEO_PASSWORD ? "SET" : "NOT SET");
+
   const app  = express();
 
   // *** זה התיקון: PORT דינמי ש-Railway דורש ***
