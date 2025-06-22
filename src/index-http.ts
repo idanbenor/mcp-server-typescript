@@ -110,6 +110,8 @@ async function main() {
 
   /* MCP endpoint */
   app.post("/mcp", basicAuth, (req: Request, res: Response) => {
+    console.log("POST /mcp BODY:", JSON.stringify(req.body));
+console.log("POST /mcp HEADERS:", JSON.stringify(req.headers));
     (async () => {
       try {
         const username = req.username ?? process.env.DATAFORSEO_USERNAME;
